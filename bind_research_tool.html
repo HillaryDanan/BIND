@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BIND: Biological Validation for AI Safety Research</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            overflow: hidden;
+        }
+        
+        #container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        #canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        #header {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            max-width: 500px;
+        }
+        
+        #header h1 {
+            font-size: 28px;
+            margin: 0;
+            color: #4ECDC4;
+        }
+        
+        #header h2 {
+            font-size: 16px;
+            margin: 5px 0;
+            color: #95E1D3;
+            font-weight: normal;
+        }
+        
+        #header p {
+            font-size: 14px;
+            line-height: 1.5;
+            opacity: 0.8;
+            margin: 10px 0;
+        }
+        
+        #controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(15,15,15,0.95);
+            border: 1px solid #333;
+            padding: 25px;
+            border-radius: 8px;
+            width: 280px;
+        }
+        
+        #controls h3 {
+            margin: 0 0 20px 0;
+            color: #4ECDC4;
+            font-size: 18px;
+        }
+        
+        .slider-group {
+            margin: 20px 0;
+        }
+        
+        .slider-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #e0e0e0;
+        }
+        
+        .slider-group .description {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 5px;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+            -webkit-appearance: none;
+            background: #222;
+            outline: none;
+            height: 6px;
+            border-radius: 3px;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #4ECDC4;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        
+        #metrics {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(15,15,15,0.95);
+            border: 1px solid #333;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 400px;
+        }
+        
+        #metrics h3 {
+            margin: 0 0 15px 0;
+            color: #4ECDC4;
+            font-size: 16px;
+        }
+        
+        .metric {
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+        }
+        
+        .metric-label {
+            color: #aaa;
+        }
+        
+        .metric-value {
+            color: #fff;
+            font-weight: 500;
+        }
+        
+        #insights {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(15,15,15,0.95);
+            border: 1px solid #333;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 350px;
+        }
+        
+        #insights h3 {
+            margin: 0 0 10px 0;
+            color: #FFE66D;
+            font-size: 16px;
+        }
+        
+        #insights p {
+            font-size: 13px;
+            line-height: 1.5;
+            margin: 5px 0;
+        }
+        
+        .warning {
+            background: rgba(255, 230, 109, 0.1);
+            border-left: 3px solid #FFE66D;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 13px;
+        }
+        
+        .info {
+            background: rgba(78, 205, 196, 0.1);
+            border-left: 3px solid #4ECDC4;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <canvas id="canvas"></canvas>
+        
+        <div id="header">
+            <h1>BIND Research Tool</h1>
+            <h2>Boundary Information Neural Dynamics</h2>
+            <p>
+                Exploring how information transforms at system boundaries. 
+                Based on neuroscience research showing alternative processing 
+                pathways achieve identical outcomes.
+            </p>
+        </div>
+        
+        <div id="controls">
+            <h3>System Parameters</h3>
+            
+            <div class="slider-group">
+                <label>Information Gradient: <span id="gradient-val">5</span></label>
+                <div class="description">Rate of information change at boundaries</div>
+                <input type="range" id="gradient" min="1" max="10" value="5" step="0.1">
+            </div>
+            
+            <div class="slider-group">
+                <label>System Complexity: <span id="complexity-val">3</span></label>
+                <div class="description">Number of interacting subsystems</div>
+                <input type="range" id="complexity" min="1" max="8" value="3" step="1">
+            </div>
+            
+            <div class="slider-group">
+                <label>Pathway Diversity: <span id="diversity-val">0.5</span></label>
+                <div class="description">Alternative processing routes available</div>
+                <input type="range" id="diversity" min="0" max="1" value="0.5" step="0.01">
+            </div>
+            
+            <div class="slider-group">
+                <label>Integration Rate: <span id="integration-val">1</span></label>
+                <div class="description">How quickly subsystems coordinate</div>
+                <input type="range" id="integration" min="0.1" max="3" value="1" step="0.1">
+            </div>
+        </div>
+        
+        <div id="metrics">
+            <h3>Boundary Analysis Metrics</h3>
+            <div class="metric">
+                <span class="metric-label">Information Flux (I):</span>
+                <span class="metric-value" id="flux">0.00e+00</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Integration Measure (Φ):</span>
+                <span class="metric-value" id="phi">0.00</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Pathway Coherence:</span>
+                <span class="metric-value" id="coherence">0%</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Processing Mode:</span>
+                <span class="metric-value" id="mode">Analyzing...</span>
+            </div>
+        </div>
+        
+        <div id="insights">
+            <h3>Research Insights</h3>
+            <div id="insight-content">
+                <p>Adjusting parameters to explore different boundary conditions...</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // BIND Research Tool Visualization
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Set canvas size
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        
+        // Information particle for boundary visualization
+        class InfoParticle {
+            constructor(x, y, type) {
+                this.x = x;
+                this.y = y;
+                this.vx = (Math.random() - 0.5) * 2;
+                this.vy = (Math.random() - 0.5) * 2;
+                this.type = type; // 'concrete' or 'abstract'
+                this.life = 1.0;
+                this.size = Math.random() * 2 + 1;
+            }
+            
+            update(deltaTime, gradient) {
+                // Information flow dynamics
+                const noise = 0.5;
+                this.vx += (Math.random() - 0.5) * noise * gradient;
+                this.vy += (Math.random() - 0.5) * noise * gradient;
+                
+                // Damping
+                this.vx *= 0.98;
+                this.vy *= 0.98;
+                
+                this.x += this.vx * deltaTime * 60;
+                this.y += this.vy * deltaTime * 60;
+                
+                this.life -= deltaTime * 0.3;
+            }
+            
+            draw(ctx) {
+                const alpha = Math.max(0, this.life);
+                if (this.type === 'concrete') {
+                    ctx.fillStyle = `rgba(78, 205, 196, ${alpha})`;
+                } else {
+                    ctx.fillStyle = `rgba(255, 230, 109, ${alpha})`;
+                }
+                
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+        
+        // Boundary system representing information processing
+        class BoundarySystem {
+            constructor() {
+                this.particles = [];
+                this.subsystems = [];
+                this.time = 0;
+                this.metrics = {
+                    flux: 0,
+                    phi: 0,
+                    coherence: 0,
+                    mode: 'Initializing'
+                };
+            }
+            
+            generateSubsystems(complexity) {
+                this.subsystems = [];
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                const baseRadius = Math.min(canvas.width, canvas.height) * 0.3;
+                
+                for (let i = 0; i < complexity; i++) {
+                    const angle = (i / complexity) * Math.PI * 2;
+                    const offset = Math.sin(this.time + i) * 20;
+                    
+                    this.subsystems.push({
+                        x: centerX + Math.cos(angle) * (baseRadius + offset),
+                        y: centerY + Math.sin(angle) * (baseRadius + offset),
+                        radius: 40 + Math.sin(this.time * 2 + i) * 10,
+                        type: i % 2 === 0 ? 'concrete' : 'abstract'
+                    });
+                }
+            }
+            
+            update(deltaTime, params) {
+                this.time += deltaTime * params.integration;
+                
+                // Update subsystems
+                this.generateSubsystems(params.complexity);
+                
+                // Generate particles at subsystem boundaries
+                if (Math.random() < params.gradient * 0.05) {
+                    for (let sys of this.subsystems) {
+                        // Particles emerge from boundaries
+                        const angle = Math.random() * Math.PI * 2;
+                        const x = sys.x + Math.cos(angle) * sys.radius;
+                        const y = sys.y + Math.sin(angle) * sys.radius;
+                        this.particles.push(new InfoParticle(x, y, sys.type));
+                    }
+                }
+                
+                // Update particles
+                this.particles = this.particles.filter(p => {
+                    p.update(deltaTime, params.gradient);
+                    return p.life > 0 && 
+                           p.x > 0 && p.x < canvas.width && 
+                           p.y > 0 && p.y < canvas.height;
+                });
+                
+                // Calculate metrics based on system state
+                this.calculateMetrics(params);
+            }
+            
+            calculateMetrics(params) {
+                // Information flux based on particle activity
+                const particleDensity = this.particles.length / 500;
+                this.metrics.flux = params.gradient * params.complexity * particleDensity * 1e6;
+                
+                // Integration measure (simplified)
+                const systemCoherence = params.diversity;
+                const integration = Math.min(1, particleDensity) * params.complexity;
+                this.metrics.phi = integration * systemCoherence * params.gradient * 0.7;
+                
+                // Coherence percentage
+                this.metrics.coherence = Math.round(systemCoherence * 100);
+                
+                // Processing mode determination
+                if (this.metrics.phi > 4.3) {
+                    this.metrics.mode = 'Highly Integrated';
+                } else if (this.metrics.phi > 2.5) {
+                    this.metrics.mode = 'Boundary Transformation';
+                } else if (this.metrics.phi > 1) {
+                    this.metrics.mode = 'Subsystem Interaction';
+                } else {
+                    this.metrics.mode = 'Independent Processing';
+                }
+            }
+            
+            draw(ctx) {
+                // Clear with subtle trail
+                ctx.fillStyle = 'rgba(10, 10, 10, 0.1)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw connections between subsystems
+                ctx.strokeStyle = 'rgba(100, 100, 100, 0.2)';
+                ctx.lineWidth = 1;
+                
+                for (let i = 0; i < this.subsystems.length; i++) {
+                    for (let j = i + 1; j < this.subsystems.length; j++) {
+                        const s1 = this.subsystems[i];
+                        const s2 = this.subsystems[j];
+                        const dist = Math.sqrt((s1.x - s2.x)**2 + (s1.y - s2.y)**2);
+                        
+                        if (dist < 300) {
+                            const alpha = 1 - dist / 300;
+                            ctx.strokeStyle = `rgba(100, 100, 100, ${alpha * 0.3})`;
+                            ctx.beginPath();
+                            ctx.moveTo(s1.x, s1.y);
+                            ctx.lineTo(s2.x, s2.y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+                
+                // Draw subsystems
+                for (let sys of this.subsystems) {
+                    // Subsystem core
+                    ctx.fillStyle = sys.type === 'concrete' ? 
+                        'rgba(78, 205, 196, 0.1)' : 'rgba(255, 230, 109, 0.1)';
+                    ctx.beginPath();
+                    ctx.arc(sys.x, sys.y, sys.radius, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    // Subsystem boundary
+                    ctx.strokeStyle = sys.type === 'concrete' ? 
+                        'rgba(78, 205, 196, 0.5)' : 'rgba(255, 230, 109, 0.5)';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                }
+                
+                // Draw particles
+                for (let particle of this.particles) {
+                    particle.draw(ctx);
+                }
+                
+                // Draw information flow indicators
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+                ctx.lineWidth = 1;
+                
+                for (let i = 0; i < this.subsystems.length; i++) {
+                    const sys = this.subsystems[i];
+                    const nextSys = this.subsystems[(i + 1) % this.subsystems.length];
+                    
+                    // Flow direction
+                    const dx = nextSys.x - sys.x;
+                    const dy = nextSys.y - sys.y;
+                    const angle = Math.atan2(dy, dx);
+                    
+                    // Draw flow arrow
+                    const arrowX = sys.x + Math.cos(angle) * (sys.radius + 20);
+                    const arrowY = sys.y + Math.sin(angle) * (sys.radius + 20);
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(arrowX, arrowY);
+                    ctx.lineTo(
+                        arrowX + Math.cos(angle) * 20,
+                        arrowY + Math.sin(angle) * 20
+                    );
+                    ctx.stroke();
+                }
+            }
+        }
+        
+        // Initialize system
+        const system = new BoundarySystem();
+        let lastTime = performance.now();
+        
+        // Get controls
+        const controls = {
+            gradient: document.getElementById('gradient'),
+            complexity: document.getElementById('complexity'),
+            diversity: document.getElementById('diversity'),
+            integration: document.getElementById('integration')
+        };
+        
+        // Update displays and insights
+        function updateInterface() {
+            // Update parameter displays
+            document.getElementById('gradient-val').textContent = controls.gradient.value;
+            document.getElementById('complexity-val').textContent = controls.complexity.value;
+            document.getElementById('diversity-val').textContent = controls.diversity.value;
+            document.getElementById('integration-val').textContent = controls.integration.value;
+            
+            // Update metrics
+            document.getElementById('flux').textContent = system.metrics.flux.toExponential(2);
+            document.getElementById('phi').textContent = system.metrics.phi.toFixed(2);
+            document.getElementById('coherence').textContent = system.metrics.coherence + '%';
+            document.getElementById('mode').textContent = system.metrics.mode;
+            
+            // Update insights based on current state
+            const insightContent = document.getElementById('insight-content');
+            
+            if (system.metrics.phi > 4.3) {
+                insightContent.innerHTML = `
+                    <div class="warning">
+                        <strong>High Integration Detected</strong><br>
+                        Multiple processing pathways are coordinating effectively. 
+                        This pattern suggests robust information processing across boundaries.
+                    </div>
+                    <p>In biological systems, this level of integration is associated with 
+                    flexible problem-solving and adaptation.</p>
+                `;
+            } else if (system.metrics.phi > 2.5) {
+                insightContent.innerHTML = `
+                    <div class="info">
+                        <strong>Boundary Transformation Active</strong><br>
+                        Information is transforming as it crosses subsystem boundaries.
+                    </div>
+                    <p>This intermediate state shows how different processing modes 
+                    can interact while maintaining their distinct characteristics.</p>
+                `;
+            } else if (controls.diversity.value > 0.7) {
+                insightContent.innerHTML = `
+                    <p><strong>High Pathway Diversity</strong></p>
+                    <p>Multiple alternative processing routes are available. This mirrors 
+                    findings from neuroscience where different neural pathways can achieve 
+                    identical outcomes.</p>
+                `;
+            } else {
+                insightContent.innerHTML = `
+                    <p>Adjust parameters to explore how information transforms at boundaries 
+                    between different processing systems.</p>
+                    <p>Try increasing complexity and pathway diversity to see emergent 
+                    coordination patterns.</p>
+                `;
+            }
+        }
+        
+        // Animation loop
+        function animate(currentTime) {
+            const deltaTime = (currentTime - lastTime) / 1000;
+            lastTime = currentTime;
+            
+            const params = {
+                gradient: parseFloat(controls.gradient.value),
+                complexity: parseInt(controls.complexity.value),
+                diversity: parseFloat(controls.diversity.value),
+                integration: parseFloat(controls.integration.value)
+            };
+            
+            system.update(deltaTime, params);
+            system.draw(ctx);
+            updateInterface();
+            
+            requestAnimationFrame(animate);
+        }
+        
+        // Start animation
+        requestAnimationFrame(animate);
+        
+        // Add input listeners
+        Object.values(controls).forEach(control => {
+            control.addEventListener('input', updateInterface);
+        });
+    </script>
+</body>
+</html>
