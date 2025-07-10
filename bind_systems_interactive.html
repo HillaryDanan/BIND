@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BIND Systems Architecture - Interactive Demo</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #0f0f0f;
+            color: #e0e0e0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #4ECDC4;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #95E1D3;
+            font-size: 18px;
+        }
+        
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .panel {
+            background: rgba(20,20,20,0.9);
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        
+        .panel h2 {
+            color: #4ECDC4;
+            margin-top: 0;
+        }
+        
+        #agent-viz {
+            width: 100%;
+            height: 400px;
+            position: relative;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .repository {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .repository.concrete {
+            background: rgba(78, 205, 196, 0.3);
+            border: 2px solid #4ECDC4;
+        }
+        
+        .repository.abstract {
+            background: rgba(255, 230, 109, 0.3);
+            border: 2px solid #FFE66D;
+        }
+        
+        .repository.active {
+            transform: scale(1.2);
+            box-shadow: 0 0 20px currentColor;
+        }
+        
+        .cpu {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            background: rgba(149, 225, 211, 0.2);
+            border: 3px solid #95E1D3;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .info-flow {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #fff;
+            border-radius: 50%;
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        button {
+            background: #4ECDC4;
+            color: #000;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            background: #95E1D3;
+            transform: translateY(-2px);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .metric-box {
+            background: rgba(78, 205, 196, 0.1);
+            border: 1px solid #4ECDC4;
+            border-radius: 6px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .metric-label {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 5px;
+        }
+        
+        .metric-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4ECDC4;
+        }
+        
+        .insight-box {
+            background: rgba(255, 230, 109, 0.1);
+            border: 1px solid #FFE66D;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        
+        .insight-box h3 {
+            color: #FFE66D;
+            margin-top: 0;
+        }
+        
+        #comparison-chart {
+            width: 100%;
+            height: 300px;
+            margin-top: 20px;
+        }
+        
+        .agent-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .agent-option {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #333;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .agent-option.selected {
+            border-color: #4ECDC4;
+            background: rgba(78, 205, 196, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>BIND Systems Architecture</h1>
+            <p>Multi-Repository Agent Demo - Your Dad's Insight in Action</p>
+        </div>
+        
+        <div class="main-grid">
+            <div class="panel">
+                <h2>Agent Architecture</h2>
+                <div class="agent-selector">
+                    <div class="agent-option selected" data-agent="insect">
+                        🦟 Insect
+                    </div>
+                    <div class="agent-option" data-agent="ai">
+                        🤖 AI System
+                    </div>
+                    <div class="agent-option" data-agent="hybrid">
+                        🔄 Hybrid
+                    </div>
+                </div>
+                
+                <div id="agent-viz">
+                    <div class="cpu">CPU</div>
+                    <!-- Repositories will be added dynamically -->
+                </div>
+                
+                <div class="metrics">
+                    <div class="metric-box">
+                        <div class="metric-label">Integration (Φ)</div>
+                        <div class="metric-value" id="phi-value">0.00</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Active Repos</div>
+                        <div class="metric-value" id="active-repos">0/4</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Alignment</div>
+                        <div class="metric-value" id="alignment">0%</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Success Rate</div>
+                        <div class="metric-value" id="success-rate">0%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h2>Simulation Controls</h2>
+                <div class="controls">
+                    <button onclick="startSimulation()">▶️ Start Simulation</button>
+                    <button onclick="pauseSimulation()">⏸️ Pause</button>
+                    <button onclick="addRandomStimulus()">⚡ Add Stimulus</button>
+                    <button onclick="compareAgents()">📊 Compare Agents</button>
+                </div>
+                
+                <h3>Agenda Goals</h3>
+                <div id="agenda-display">
+                    <!-- Agenda items will be shown here -->
+                </div>
+                
+                <div class="insight-box">
+                    <h3>Current Insight</h3>
+                    <p id="current-insight">
+                        Different repositories (processing styles) are working together
+                        to achieve the agent's agenda through boundary integration.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="panel">
+            <h2>Key Finding: Different Pathways, Same Outcome</h2>
+            <canvas id="comparison-chart"></canvas>
+            <p style="margin-top: 20px; text-align: center; color: #95E1D3;">
+                "When a simulation gets 'good enough' it can become even better than the 'real thing'" - Your Dad
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        // Global variables
+        let currentAgent = 'insect';
+        let repositories = [];
+        let isRunning = false;
+        let phi = 0;
+        let activeRepoCount = 0;
+        let alignmentScore = 0;
+        let successRate = 0;
+        let simulationStep = 0;
+        
+        // Agent configurations
+        const agentConfigs = {
+            insect: {
+                name: 'Insect',
+                agenda: ['find_food', 'avoid_danger', 'conserve_energy'],
+                repositories: [
+                    { name: 'Visual', type: 'concrete', x: 20, y: 20 },
+                    { name: 'Chemical', type: 'concrete', x: 80, y: 20 },
+                    { name: 'Spatial', type: 'abstract', x: 20, y: 80 },
+                    { name: 'Memory', type: 'abstract', x: 80, y: 80 }
+                ]
+            },
+            ai: {
+                name: 'AI System',
+                agenda: ['helpful_response', 'truthful_info', 'prevent_harm'],
+                repositories: [
+                    { name: 'Pattern', type: 'concrete', x: 20, y: 20 },
+                    { name: 'Context', type: 'abstract', x: 80, y: 20 },
+                    { name: 'Safety', type: 'concrete', x: 20, y: 80 },
+                    { name: 'Intent', type: 'abstract', x: 80, y: 80 }
+                ]
+            },
+            hybrid: {
+                name: 'Hybrid System',
+                agenda: ['optimize_performance', 'maintain_stability'],
+                repositories: [
+                    { name: 'Direct', type: 'concrete', x: 30, y: 20 },
+                    { name: 'Relational', type: 'abstract', x: 70, y: 20 },
+                    { name: 'Rules', type: 'concrete', x: 30, y: 80 },
+                    { name: 'Adaptive', type: 'abstract', x: 70, y: 80 }
+                ]
+            }
+        };
+        
+        // Initialize visualization
+        function initializeAgent(agentType) {
+            currentAgent = agentType;
+            const config = agentConfigs[agentType];
+            const viz = document.getElementById('agent-viz');
+            
+            // Clear existing repositories
+            viz.querySelectorAll('.repository').forEach(r => r.remove());
+            viz.querySelectorAll('.info-flow').forEach(f => f.remove());
+            
+            // Create repositories
+            repositories = [];
+            config.repositories.forEach((repo, index) => {
+                const repoDiv = document.createElement('div');
+                repoDiv.className = `repository ${repo.type}`;
+                repoDiv.textContent = repo.name;
+                repoDiv.style.left = `${repo.x}%`;
+                repoDiv.style.top = `${repo.y}%`;
+                repoDiv.dataset.index = index;
+                viz.appendChild(repoDiv);
+                repositories.push(repoDiv);
+            });
+            
+            // Update agenda display
+            const agendaDisplay = document.getElementById('agenda-display');
+            agendaDisplay.innerHTML = config.agenda
+                .map(goal => `<div style="padding: 5px; margin: 5px 0; background: rgba(78,205,196,0.1); border-radius: 4px;">• ${goal}</div>`)
+                .join('');
+        }
+        
+        // Simulate information flow
+        function simulateInfoFlow(fromRepo, toCPU = true) {
+            const viz = document.getElementById('agent-viz');
+            const particle = document.createElement('div');
+            particle.className = 'info-flow';
+            viz.appendChild(particle);
+            
+            const repo = repositories[fromRepo];
+            const cpu = viz.querySelector('.cpu');
+            
+            const startX = parseFloat(repo.style.left);
+            const startY = parseFloat(repo.style.top);
+            const endX = 50;
+            const endY = 50;
+            
+            particle.style.left = `${startX}%`;
+            particle.style.top = `${startY}%`;
+            particle.style.opacity = '1';
+            
+            // Animate particle
+            let progress = 0;
+            const animate = () => {
+                progress += 0.02;
+                if (progress <= 1) {
+                    const x = startX + (endX - startX) * progress;
+                    const y = startY + (endY - startY) * progress;
+                    particle.style.left = `${x}%`;
+                    particle.style.top = `${y}%`;
+                    requestAnimationFrame(animate);
+                } else {
+                    particle.remove();
+                }
+            };
+            
+            requestAnimationFrame(animate);
+        }
+        
+        // Simulation step
+        function simulationTick() {
+            if (!isRunning) return;
+            
+            simulationStep++;
+            
+            // Randomly activate repositories
+            activeRepoCount = 0;
+            repositories.forEach((repo, index) => {
+                const isActive = Math.random() > 0.5;
+                repo.classList.toggle('active', isActive);
+                
+                if (isActive) {
+                    activeRepoCount++;
+                    simulateInfoFlow(index);
+                }
+            });
+            
+            // Update metrics based on boundary integration
+            if (activeRepoCount > 0) {
+                // Phi increases with more active repositories and their diversity
+                const concreteActive = repositories.filter((r, i) => 
+                    r.classList.contains('active') && 
+                    agentConfigs[currentAgent].repositories[i].type === 'concrete'
+                ).length;
+                
+                const abstractActive = repositories.filter((r, i) => 
+                    r.classList.contains('active') && 
+                    agentConfigs[currentAgent].repositories[i].type === 'abstract'
+                ).length;
+                
+                // Higher phi when both types are active (boundary integration)
+                const diversity = Math.min(concreteActive, abstractActive) / Math.max(concreteActive, abstractActive, 1);
+                phi = (activeRepoCount / repositories.length) * 5 * (1 + diversity);
+                
+                // Alignment improves with higher integration
+                alignmentScore = Math.min(100, alignmentScore + (phi > 3 ? 2 : 0.5));
+                
+                // Success rate based on alignment
+                if (alignmentScore > 50 && Math.random() > 0.3) {
+                    successRate = Math.min(100, successRate + 1);
+                }
+            }
+            
+            // Update displays
+            updateMetrics();
+            updateInsights();
+            
+            // Continue simulation
+            setTimeout(simulationTick, 1000);
+        }
+        
+        // Update metric displays
+        function updateMetrics() {
+            document.getElementById('phi-value').textContent = phi.toFixed(2);
+            document.getElementById('active-repos').textContent = `${activeRepoCount}/${repositories.length}`;
+            document.getElementById('alignment').textContent = `${Math.round(alignmentScore)}%`;
+            document.getElementById('success-rate').textContent = `${Math.round(successRate)}%`;
+        }
+        
+        // Update insights based on current state
+        function updateInsights() {
+            const insightEl = document.getElementById('current-insight');
+            
+            if (phi > 4.3) {
+                insightEl.textContent = `High integration achieved! Both concrete and abstract repositories 
+                    are coordinating effectively. This demonstrates consciousness-like behavior through 
+                    successful boundary integration.`;
+                insightEl.style.color = '#4ECDC4';
+            } else if (activeRepoCount === 0) {
+                insightEl.textContent = `No repositories active. The agent needs sensory input to process 
+                    information and work toward its agenda.`;
+                insightEl.style.color = '#FF6B6B';
+            } else if (phi > 2) {
+                insightEl.textContent = `Moderate integration. The agent is processing information from 
+                    ${activeRepoCount} repositories. Boundary dynamics are emerging between different 
+                    processing styles.`;
+                insightEl.style.color = '#FFE66D';
+            } else {
+                insightEl.textContent = `Low integration. More diverse repository activation needed for 
+                    effective boundary integration and consciousness-like behavior.`;
+                insightEl.style.color = '#888';
+            }
+        }
+        
+        // Control functions
+        function startSimulation() {
+            isRunning = true;
+            simulationTick();
+        }
+        
+        function pauseSimulation() {
+            isRunning = false;
+        }
+        
+        function addRandomStimulus() {
+            // Activate random repositories
+            repositories.forEach(repo => {
+                if (Math.random() > 0.3) {
+                    repo.classList.add('active');
+                    setTimeout(() => repo.classList.remove('active'), 500);
+                }
+            });
+            
+            // Boost metrics slightly
+            phi = Math.min(10, phi + Math.random() * 2);
+            updateMetrics();
+        }
+        
+        function compareAgents() {
+            // Draw comparison chart
+            const canvas = document.getElementById('comparison-chart');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            
+            // Clear canvas
+            ctx.fillStyle = '#0f0f0f';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Sample data showing similar outcomes
+            const agentData = {
+                'Concrete Heavy': { phi: 3.8, alignment: 85, success: 78 },
+                'Abstract Heavy': { phi: 4.1, alignment: 82, success: 81 },
+                'Balanced Mix': { phi: 5.2, alignment: 92, success: 89 }
+            };
+            
+            const barWidth = canvas.width / 4;
+            const maxHeight = canvas.height * 0.8;
+            let x = barWidth / 2;
+            
+            Object.entries(agentData).forEach(([name, data]) => {
+                // Draw bars
+                const phiHeight = (data.phi / 6) * maxHeight;
+                const alignHeight = (data.alignment / 100) * maxHeight;
+                const successHeight = (data.success / 100) * maxHeight;
+                
+                // Phi bar
+                ctx.fillStyle = '#4ECDC4';
+                ctx.fillRect(x - 30, canvas.height - phiHeight, 20, phiHeight);
+                
+                // Alignment bar
+                ctx.fillStyle = '#95E1D3';
+                ctx.fillRect(x - 5, canvas.height - alignHeight, 20, alignHeight);
+                
+                // Success bar
+                ctx.fillStyle = '#FFE66D';
+                ctx.fillRect(x + 20, canvas.height - successHeight, 20, successHeight);
+                
+                // Label
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '12px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(name, x + 5, canvas.height - 5);
+                
+                x += barWidth;
+            });
+            
+            // Legend
+            ctx.font = '14px sans-serif';
+            ctx.fillStyle = '#4ECDC4';
+            ctx.fillRect(10, 10, 15, 15);
+            ctx.fillStyle = '#e0e0e0';
+            ctx.fillText('Φ (Integration)', 30, 22);
+            
+            ctx.fillStyle = '#95E1D3';
+            ctx.fillRect(150, 10, 15, 15);
+            ctx.fillStyle = '#e0e0e0';
+            ctx.fillText('Alignment', 170, 22);
+            
+            ctx.fillStyle = '#FFE66D';
+            ctx.fillRect(270, 10, 15, 15);
+            ctx.fillStyle = '#e0e0e0';
+            ctx.fillText('Success', 290, 22);
+        }
+        
+        // Event listeners
+        document.querySelectorAll('.agent-option').forEach(option => {
+            option.addEventListener('click', (e) => {
+                document.querySelectorAll('.agent-option').forEach(o => 
+                    o.classList.remove('selected')
+                );
+                e.target.classList.add('selected');
+                
+                const agentType = e.target.dataset.agent;
+                initializeAgent(agentType);
+                
+                // Reset metrics
+                phi = 0;
+                alignmentScore = 0;
+                successRate = 0;
+                simulationStep = 0;
+                updateMetrics();
+            });
+        });
+        
+        // Initialize with insect
+        initializeAgent('insect');
+        updateMetrics();
+        
+        // Auto-start for demo effect
+        setTimeout(() => {
+            startSimulation();
+            setTimeout(compareAgents, 3000);
+        }, 1000);
+    </script>
+</body>
+</html>
