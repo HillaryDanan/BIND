@@ -124,4 +124,4 @@ BIND includes a practical systems architecture showing how consciousness-like be
 
 Key insight: Different processing architectures (concrete vs abstract) can achieve identical outcomes through successful boundary integration. This validates findings from neuroscience showing alternative neural pathways achieving the same results.
 
-See  for practical demonstration.
+See `examples/systems_demo.py` for practical demonstration.
