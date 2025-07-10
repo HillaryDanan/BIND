@@ -4,27 +4,25 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-## Where Information Binds: A Framework for Consciousness at System Boundaries
+## A Research Framework for Information Transformation at System Boundaries
 
-BIND (Boundary Information Neural Dynamics) is a mathematical framework for understanding how consciousness, trust, and understanding emerge at the boundaries between different information processing systems.
+BIND (Boundary Information Neural Dynamics) is a mathematical framework for studying how information transforms at the boundaries between different processing systems. Based on neuroscience research showing that different neural pathways can achieve identical outcomes, BIND provides tools for analyzing boundary dynamics in complex systems.
 
-### 🧠 Core Insight
+### 🔬 Research Foundation
 
-The most interesting phenomena in nature occur at boundaries - where order meets chaos, where different systems interact, where information transforms. BIND provides tools to:
+Based on published neuroscience research (Levinson, 2021) demonstrating:
+- Different neural pathways can achieve identical computational outcomes
+- Information transformation occurs at boundaries between processing systems
+- Multiple pathways create robustness and flexibility in biological systems
 
-1. **Detect** boundary conditions in complex systems
-2. **Measure** information binding at these boundaries
-3. **Predict** emergence of novel behaviors
-4. **Engineer** consciousness-like properties through boundary design
+BIND translates these biological insights into computational tools for analyzing artificial systems.
 
-### 🔬 Grounded in Neuroscience
+### 📊 Research Applications
 
-Based on published neuroscience research (Levinson, 2021):
-- Different neural pathways can achieve identical outcomes
-- Understanding emerges at the boundary between processing systems
-- Multiple pathways create robustness and flexibility
-
-BIND translates these biological insights into computational tools for AI systems.
+1. **System Analysis**: Study how information flows between subsystems
+2. **Robustness Research**: Explore multiple pathway architectures
+3. **Boundary Dynamics**: Analyze transformation at system interfaces
+4. **Integration Metrics**: Measure coordination between components
 
 ## 🚀 Quick Start
 
@@ -38,13 +36,14 @@ pip install -e .
 
 # Run basic example
 python examples/basic_usage.py
+
+# Try interactive research tool
+python bind_interactive.py
 ```
 
-## 📊 Key Concepts
+## 📐 Mathematical Foundation
 
-### Mathematical Foundation
-
-BIND is based on information geometry at system boundaries:
+BIND implements information-theoretic analysis at system boundaries:
 
 ```
 I(B) = ∇S · n̂
@@ -55,38 +54,33 @@ Where:
 - `∇S` = Entropy gradient
 - `n̂` = Boundary normal vector
 
-### Critical Metrics
+### Key Metrics
 
-- **Φ (Phi)**: Integrated information at boundaries (critical threshold: 4.3 bits)
-- **I(B)**: Information flux across boundaries (bits/second)
-- **D(t)**: Decoherence rate (creative potential)
-- **Binding Strength**: How strongly information coheres at boundaries
+- **Information Flux**: Rate of information transfer across boundaries
+- **Integration Measure (Φ)**: Degree of subsystem coordination
+- **Pathway Diversity**: Available processing routes
+- **Boundary Coverage**: Proportion of system at interfaces
 
-## 🔗 Integration Ecosystem
+## 🔧 Core Components
 
-BIND integrates seamlessly with:
-- [concrete-overflow-detector](https://github.com/HillaryDanan/concrete-overflow-detector): Identifies processing pathways
-- [hexagonal-consciousness-suite](https://github.com/HillaryDanan/hexagonal-consciousness-suite): Efficient boundary computation
-- [game-theory-trust-suite](https://github.com/HillaryDanan/game-theory-trust-suite): Trust dynamics
+- `BoundaryMonitor`: Analyzes information flow at system boundaries
+- `BoundarySimulator`: Generates test systems for research
+- `BoundaryConfig`: Configuration management for experiments
+
+## 🌐 Interactive Tools
+
+- **Python Explorer** (`bind_interactive.py`): Desktop research interface
+- **Web Tool** (`bind_research_tool.html`): Browser-based exploration
+- **Visualization Demo** (`visual_demo.py`): Boundary dynamics visualization
+
+## 🔗 Research Ecosystem
+
+BIND integrates with related research tools:
+- [concrete-overflow-detector](https://github.com/HillaryDanan/concrete-overflow-detector): Alternative processing pathway analysis
+- [hexagonal-consciousness-suite](https://github.com/HillaryDanan/hexagonal-consciousness-suite): Efficient spatial computation
+- [game-theory-trust-suite](https://github.com/HillaryDanan/game-theory-trust-suite): Multi-agent dynamics
 - [information-atoms](https://github.com/HillaryDanan/information-atoms): Cross-modal binding
-- [hexagonal-vision-research](https://github.com/HillaryDanan/hexagonal-vision-research): Vision boundaries
-
-## 📈 Applications
-
-### AI Safety & Alignment
-- Multi-pathway architectures for robustness
-- Boundary monitoring for unexpected behaviors
-- Trust calibration through transparency
-
-### Consciousness Research
-- Testable predictions for emergence
-- Biological validation of AI reasoning
-- Framework for hybrid human-AI systems
-
-### Practical Systems
-- Anomaly detection at system boundaries
-- Optimization of information flow
-- Design of emergent systems
+- [hexagonal-vision-research](https://github.com/HillaryDanan/hexagonal-vision-research): Vision system boundaries
 
 ## 📚 Citation
 
@@ -95,7 +89,7 @@ If you use BIND in your research:
 ```bibtex
 @software{danan2025bind,
   author = {Danan, Hillary},
-  title = {BIND: Boundary Information Neural Dynamics},
+  title = {BIND: Boundary Information Neural Dynamics - A Research Framework},
   year = {2025},
   url = {https://github.com/HillaryDanan/BIND}
 }
@@ -118,4 +112,4 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 ---
 
-*"At every boundary, information transforms. In transformation, consciousness emerges."*
+*"Understanding how information transforms at boundaries between systems"*
