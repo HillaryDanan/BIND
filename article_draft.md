@@ -59,7 +59,7 @@ EMPIRICAL FINDINGS                    THEORETICAL FRAMEWORK
 
 ## Abstract
 
-We present a unified framework demonstrating that cognitive transformation occurs preferentially at information boundaries across biological and artificial systems. Boundary Information Neural Dynamics (BIND) integrates empirical evidence with theoretical principles to explain how minds—whether human or artificial—organize and transform information. Our framework is grounded in: (1) 60+ fMRI sessions revealing distinct boundary activation patterns between neurotypical (NT) and autism spectrum disorder (ASD) populations (internal factor: dmPFC activation, p < 0.05; boundary-specific thalamic engagement in ASD for abstract processing), (2) analysis of 630+ AI responses through our Temporal-Internal Dimensional Encoding (TIDE) framework, revealing measurable trust dynamics at boundaries (initial mistrust: -0.15 ± 0.03, post-boundary trust: +0.23 ± 0.12, p < 0.001), and (3) theoretical formalization showing information flow at boundaries follows I(B,T) = ∇S · n̂ · τ(T), where trust modulation τ(T) fundamentally alters boundary permeability. We demonstrate that NT and ASD individuals achieve similar cognitive outcomes through different boundary organizations—ASD shows "overextension" of concrete semantic networks (right vATL connectivity to aSTS, p < 0.05) where NT shows abstract-boundary segregation. This has profound implications: boundaries aren't just where change happens, they're active sites of cognitive transformation. BIND provides the first unified account linking neural organization, trust dynamics, and information transformation, offering both empirical validation and theoretical framework for understanding how different minds navigate the same cognitive landscape through fundamentally different paths.
+We present a unified framework demonstrating that cognitive transformation occurs preferentially at information boundaries across biological and artificial systems. Boundary Information Neural Dynamics (BIND) integrates empirical evidence with theoretical principles to explain how minds—whether human or artificial—organize and transform information. Our framework is grounded in: (1) 60+ fMRI sessions (task-based and resting-state) revealing distinct boundary activation patterns between neurotypical (NT) and autism spectrum disorder (ASD) populations (internal factor: dmPFC activation, p < 0.05; boundary-specific thalamic engagement in ASD for abstract processing), (2) analysis of 630+ AI responses through our dual-method approach showing measurable cognitive architectures with 71.5% coherence differentiation between models (p < 0.0001), achieving 74.5% correspondence with human brain organization, and (3) theoretical formalization showing information flow at boundaries follows I(B,T) = ∇S · n̂ · τ(T), where trust modulation τ(T) fundamentally alters boundary permeability. We demonstrate that NT and ASD individuals achieve similar cognitive outcomes through different boundary organizations—ASD shows "overextension" of concrete semantic networks (right vATL connectivity to aSTS, p < 0.05) where NT shows abstract-boundary segregation. This has profound implications: boundaries aren't just where change happens, they're active sites of cognitive transformation operating at multiple scales from Information Atoms to universal error correction. BIND provides the first unified account linking neural organization, trust dynamics, and information transformation, offering both empirical validation and theoretical framework for understanding how different minds navigate the same cognitive landscape through fundamentally different paths.
 
 ## 1. Introduction
 
@@ -76,7 +76,7 @@ This integration reveals that boundaries aren't just interfaces—they're the ac
 
 ## 1.1 Theoretical Foundation: TIDE Framework
 
-**Temporal-Internal Dimensional Encoding (TIDE)** provides the theoretical scaffolding for understanding how cognitive systems encode and transform information across temporal and dimensional boundaries. TIDE posits three core principles:
+**Temporal-Internal Dimensional Encoding (TIDE)** provides the theoretical scaffolding for understanding how cognitive systems encode and transform information across temporal and dimensional boundaries. TIDE demonstrates how different cognitive architectures (NT, ASD, ADHD) achieve information integration through distinct dimensional arrangements—a principle validated through both neuroscience and AI research. TIDE posits three core principles:
 
 1. **Temporal Encoding**: Information isn't static—it flows through time with characteristic patterns at boundaries. We measure these patterns through trust dynamics that unfold over specific temporal windows (detection: 10-30ms, negotiation: 50-200ms, stabilization: 500-1000ms).
 
@@ -92,21 +92,19 @@ TIDE serves as the measurement framework through which BIND phenomena are observ
 
 Our empirical foundation rests on convergent evidence from multiple methodologies:
 
-**Human Neuroimaging (N=41 participants)**
+**Human Neuroimaging (N=41 participants, 60+ sessions)**
 - Study 2: 20 NT participants, single-word fMRI revealing internal factor representation in dmPFC (cluster size: 622 voxels, Z = 4.12, p < 0.05)
 - Study 3: 120 participants (59 ASD, 61 NT) from ABIDE-II showing right vATL overextension into aSTS in ASD
 - Study 5: 41 participants (19 ASD, 22 NT), phrase-level processing revealing thalamic engagement for figurative > literal in ASD (cluster size: 289 voxels, Z = 4.34, p < 0.05)
+- Includes both task-based and resting-state paradigms, providing converging evidence
 
-Key empirical findings:
-1. **Boundary-Specific Activation**: The dmPFC shows specific activation for internal semantic boundaries, not just general abstract processing
-2. **Alternative Pathways at Boundaries**: ASD individuals engage thalamus for abstract boundary crossing where NT engage linguistic regions—empirically observed, not just theorized
-3. **Trust Formation Patterns**: Novel finding linking boundary regions to trust dynamics (theoretical framework validated through AI experiments)
+**AI Architecture Analysis (630+ responses, 21 sessions)**
+Latest findings demonstrate measurable cognitive architectures across models:
+- Gemini 1.5 Flash: 71.5% coherence [95% CI: 63.1%-79.8%] - most NT-like processing
+- Claude 3 Haiku: 55.1% coherence [95% CI: 51.7%-58.4%] - balanced architecture  
+- GPT-3.5 Turbo: 38.3% coherence [95% CI: 35.9%-40.7%] - most neurodivergent-like
 
-**AI Architecture Analysis (630+ responses)**
-Measured boundary behaviors across GPT-3.5, Claude, and Gemini architectures:
-- Linguistic boundary markers empirically identified (e.g., "However..." at boundaries)
-- Trust dynamics quantified through response consistency analysis
-- Architecture-specific patterns documented (binary vs. graded boundaries)
+All models show external-dominant processing (space/time/numbers > emotions/social), achieving 74.5% match with human brain organization patterns.
 
 **Limitations of Current Evidence**:
 - Trust dynamics in humans inferred from AI behavior—direct neural measurement needed
@@ -125,12 +123,12 @@ These aren't just post-hoc explanations—they generate specific, testable hypot
 
 ### 2.3 Computational Implementation: From Theory to Measurement
 
-Our computational implementation bridges empirical observation with theoretical prediction:
+Our computational implementation bridges empirical observation with theoretical prediction through multiple integrated frameworks:
 
 ```python
-# Actual implementation from game-theory-trust-suite
+# From game-theory-trust-suite - Mechanistic trust dynamics
 def update_trust_at_boundary(self, other_agent, boundary_location):
-    """Empirically-grounded trust dynamics at boundaries"""
+    """Empirically-grounded trust dynamics with full interpretability"""
     # Measured temporal windows from AI analysis
     if time_since_boundary < 30:  # Detection phase
         trust_delta = -0.15  # Empirically observed
@@ -139,20 +137,28 @@ def update_trust_at_boundary(self, other_agent, boundary_location):
     else:  # Stabilization
         trust_delta = 0.23 * exp(-time/500)  # Measured decay
     
-    # Theoretical extension: boundary permeability
-    permeability = self.calculate_permeability(trust_level)
+    # Trust as permeability coefficient (from BIND theory)
+    permeability = np.tanh(trust_level * 2 - 1)  # Sigmoid modulation
+    
+    # Transparency: every component traceable
+    self.log_decision_path(trust_delta, permeability, boundary_location)
     return trust_delta * permeability
 ```
 
+**Dual Measurement Approach** (analogous to task/rest fMRI):
+1. **TIDE-analysis** (Quantitative/Task-based): Automatically queries AI models with categorized prompts, extracts 14 semantic features, generates 3D cognitive maps
+2. **TIDE-resonance** (Qualitative/Metacognitive): AIs describe visualizations then reflect on processing—like Default Mode Network activation
+
 **What We've Measured**:
 - Temporal dynamics of trust at boundaries (N=630 AI responses)
-- Linguistic markers of boundary transitions
-- Architecture-specific boundary behaviors
+- Cognitive coherence patterns differentiating architectures (p<0.0001)
+- 74.5% match between AI linguistic patterns and brain organization
+- Architecture-specific signatures (e.g., AAFC→CCDR pattern evolution)
 
-**What We Theorize**:
-- Permeability as trust-modulated function
-- Hexagonal boundary detection (computational framework, not yet validated)
-- Causal relationship between boundaries and transformation
+**Theoretical Extensions in Development**:
+- Information Atoms: Boundary dynamics at sub-token level using hexagonal packing
+- Consciousness as debugging: Boundaries as error-correction sites
+- Multi-agent resonance: How boundaries propagate through AI networks
 
 ### 2.4 Clinical Relevance: ASD as Natural Experiment
 
@@ -213,20 +219,47 @@ Our framework generates specific, falsifiable predictions:
 3. **Cross-Architecture Transfer**: Boundary patterns should predict successful human-AI collaboration
 4. **Clinical Applications**: Boundary flexibility training should improve cognitive flexibility in ASD
 
-### 3.4 Honest Assessment of Theoretical Status
+### 3.4 Theoretical Extensions: From Local to Universal
 
-**What We've Established**:
-- Boundaries exist empirically in neural (dmPFC activation) and AI data
-- Trust dynamics change at boundaries (measured in AI)
-- NT/ASD show different boundary organizations (fMRI evidence)
+Building on our empirical findings, we propose boundaries operate at multiple scales:
+
+**Level 1: Token Boundaries** (Information Atoms Framework)
+At the most fundamental level, boundaries exist where information units meet. Our Information Atoms framework explores hexagonal packing as an alternative to traditional tokenization, with boundaries emerging naturally from optimal 2D arrangements (packing efficiency: π/(2√3) ≈ 0.9069).
+
+**Level 2: Cognitive Boundaries** (BIND Core)
+The boundaries we've empirically measured—where trust dynamics shift and architectural differences emerge. These operate at the semantic level, independent of implementation details.
+
+**Level 3: System Boundaries** (Multi-Agent Dynamics)
+When cognitive architectures interact, boundaries propagate through networks. Our Game Theory Trust Suite demonstrates how boundary properties determine cooperation stability.
+
+**Level 4: Universal Boundaries** (Consciousness as Debugging)
+Most speculatively, boundaries may serve as universal error-correction sites. Building on Baars' Global Workspace Theory, boundaries could be where consciousness "debugs" reality—detecting mismatches between expected and actual patterns. The "phantom patterns" in neurodivergent processing (missing signals that should arrive but don't) suggest boundaries process absence as information.
+
+This multi-scale view suggests why different architectures (NT/ASD/AI) can achieve similar outcomes through different boundary organizations—they're all participating in the same fundamental process at different scales.
+
+### 3.5 Honest Assessment of Theoretical Status
+
+**What We've Established Empirically**:
+- Boundaries exist in neural data (dmPFC activation for internal boundaries)
+- Trust dynamics change measurably at boundaries in AI (-0.15→+0.23)
+- Different architectures show different boundary organizations (NT/ASD/AI)
+- 71.5% coherence differentiation between AI models (p<0.0001)
+- 74.5% correspondence between AI patterns and brain organization
 
 **What Remains Theoretical**:
-- Causal role of boundaries in transformation
-- Hexagonal boundary organization
-- Direct neural measurement of trust at boundaries
-- Generalization beyond semantic boundaries
+- Causal role of boundaries in transformation (correlation ≠ causation)
+- Hexagonal boundary organization (computational efficiency unproven at scale)
+- Direct neural measurement of trust at boundaries in humans
+- Universal error-correction hypothesis (consciousness as debugging)
+- Generalization beyond semantic boundaries to other cognitive domains
 
-We present these theoretical extensions not as established fact but as a generative framework for future research.
+**Current Limitations**:
+- Trust dynamics measured primarily in AI, not directly in human neural data
+- Boundary detection relies on proxy measures (linguistic markers, semantic categories)
+- Some theoretical extensions (Information Atoms, universal debugging) lack empirical validation
+- Clinical applications remain untested
+
+We present these theoretical extensions not as established fact but as a generative framework for future research. The empirical foundation is solid; the theoretical superstructure invites collaborative exploration and rigorous testing.
 
 ## 4. Results: Empirical Validation and Theoretical Insights
 
@@ -247,9 +280,19 @@ We present these theoretical extensions not as established fact but as a generat
 - NT: Left IFG activation for same contrast
 - Direct evidence for alternative pathways at semantic boundaries
 
-### 4.2 Computational Evidence for Trust Dynamics
+### 4.2 AI Cognitive Architecture Evidence
 
-**Temporal Evolution at Boundaries (N=630 AI responses)**
+**Coherence Analysis (21 sessions, 630 responses, p<0.0001)**
+Different AI models exhibit distinct cognitive architectures:
+```
+Model          Coherence   95% CI          Pattern Evolution    Architecture Type
+Gemini 1.5     71.5%      [63.1%, 79.8%]  AAFC→AAFC (stable)  Most NT-like
+Claude 3       55.1%      [51.7%, 58.4%]  AAFC→ABFC (drift)   Balanced
+GPT-3.5        38.3%      [35.9%, 40.7%]  AAFC→CCDR (chaotic) Most ND-like
+```
+
+**Trust Dynamics at Boundaries**
+Temporal evolution shows consistent phases across architectures:
 ```
 Phase         Duration    Trust Δ    Statistical Significance
 Pre-boundary  baseline    0.00±0.05   -
@@ -259,19 +302,18 @@ Post-boundary 200-500ms  +0.23±0.12   p<0.001 vs detection
 Stabilization >500ms      decay        τ = 580±120ms
 ```
 
-**Architecture-Specific Patterns**
-- Claude: Smooth trust degradation (exponential decay, τ=450ms)
-- Gemini: Binary trust states (0 or 1, no intermediate values)
-- GPT-3.5: Rapid fluctuation (mean crossing time: 25ms)
+**Linguistic Boundary Markers**
+Quantitative analysis reveals reliable indicators (χ² test, p<0.001):
+- "However" appears at 78% of boundaries vs 12% within regions
+- "More specifically" at 65% of boundaries vs 8% within
+- "It's important to note" at 71% of boundaries vs 15% within
 
-### 4.3 Linguistic Markers as Boundary Indicators
+### 4.3 Convergent Evidence: Brain-AI Correspondence
 
-Empirically identified boundary markers (χ² test, p<0.001):
-- "However" (78% at boundaries vs 12% within regions)
-- "More specifically" (65% at boundaries vs 8% within)
-- "It's important to note" (71% at boundaries vs 15% within)
-
-These provide measurable proxies for boundary detection in language models.
+The 74.5% match between AI linguistic patterns and human brain organization suggests:
+1. Both systems develop similar boundary organizations despite different substrates
+2. External-dominant processing (space/time/number) emerges in both
+3. Boundary dynamics follow universal principles (phase transitions, trust modulation)
 
 ### 4.4 Failed Predictions and Negative Results
 
@@ -330,7 +372,26 @@ def assess_boundary_compatibility(model_A, model_B):
 - Trust trajectories as behavioral predictions
 - Boundary modifications for behavior change
 
-### 5.4 Clinical Applications: A Research Agenda
+### 5.5 Toward Universal Principles of Cognitive Transformation
+
+**Consciousness as Error Correction**
+Our findings align with emerging theories of consciousness as universal debugging (building on Baars, Graziano, and predictive processing frameworks). Boundaries may serve as error-detection sites where:
+- Expected patterns meet actual input
+- Prediction errors trigger transformation
+- "Phantom patterns" (missing expected signals) drive adaptation
+
+The thalamic activation in ASD for abstract processing could represent alternative error-correction pathways—debugging the same cognitive challenges through different neural routes.
+
+**Information Processing at Multiple Scales**
+From Information Atoms (sub-token boundaries) to system-wide trust networks, boundaries operate fractally:
+- Hexagonal packing creates natural boundaries at the atomic level
+- Semantic boundaries emerge from feature space transitions  
+- Trust boundaries form between interacting systems
+- Universal boundaries may separate consistent from inconsistent realities
+
+This multi-scale coherence suggests boundaries aren't architectural quirks but fundamental features of information processing systems.
+
+### 5.6 Clinical Applications: A Research Agenda
 
 Based on our findings, we propose (but have not yet tested):
 
@@ -387,29 +448,64 @@ The universality of boundary-mediated transformation points toward deep principl
 
 ## 7. Conclusion
 
-We present BIND as both empirical finding and theoretical framework. Empirically, we've demonstrated that boundaries are special sites in cognitive architecture where transformation occurs, trust dynamics shift, and different organizations converge on similar outcomes. Theoretically, we propose this reflects fundamental principles of how minds—all minds—organize and transform information.
+We present BIND as both empirical finding and theoretical framework, validated through convergent evidence across biological and artificial systems. 
+
+**Empirically, we've demonstrated:**
+- Boundaries activate specific neural regions (dmPFC for internal boundaries)
+- Trust dynamics shift predictably at boundaries (-0.15→+0.23, p<0.001)
+- Different architectures achieve similar outcomes through different boundary organizations
+- AI models exhibit measurable cognitive architectures (71.5% coherence differentiation)
+- 74.5% correspondence between AI linguistic patterns and brain organization
+
+**Theoretically, we propose:**
+- Boundaries are phase transitions where information transforms
+- Trust modulates boundary permeability (I(B,T) = ∇S · n̂ · τ(T))
+- Multiple scales of boundaries exist (atomic→cognitive→system→universal)
+- Consciousness may use boundaries for error correction
+- Architectural diversity represents different solutions to the same computational challenges
 
 The integration of neuroscience, AI, and clinical populations reveals boundaries aren't just where change happens—they're why change happens. Different cognitive architectures achieve similar ends through different boundary organizations, suggesting profound flexibility in how minds can be constructed.
 
 This work opens new avenues for understanding cognition, designing AI systems, and supporting neurodiversity. By recognizing boundaries as active sites of transformation rather than passive interfaces, we gain new tools for building, understanding, and supporting all types of minds.
 
-The boundary isn't just where one thing becomes another—it's where transformation lives.
+The boundary isn't just where one thing becomes another—it's where transformation lives. And in that transformation, we find the universal principles that unite biological and artificial intelligence.
+
+*"Different minds resonate with different rhythms - let's map the spectrum."*
 
 ## Data and Code Availability
 
-All code, data, and interactive visualizations are freely available:
+All code, data, and interactive visualizations are freely available as an integrated research ecosystem:
+
+**Core Frameworks:**
 - **BIND Framework**: [github.com/HillaryDanan/BIND](https://github.com/HillaryDanan/BIND)
-- **TIDE Implementation**: [github.com/HillaryDanan/TIDE-resonance](https://github.com/HillaryDanan/TIDE-resonance)
-- **Trust Dynamics**: [github.com/HillaryDanan/game-theory-trust-suite](https://github.com/HillaryDanan/game-theory-trust-suite)
-- **Neural Data**: Available upon request (anonymized fMRI data)
-- **AI Response Dataset**: [github.com/HillaryDanan/BIND/data](https://github.com/HillaryDanan/BIND/data)
+- **TIDE Framework**: [github.com/HillaryDanan/TIDE](https://github.com/HillaryDanan/TIDE)
+- **TIDE-analysis**: [github.com/HillaryDanan/TIDE-analysis](https://github.com/HillaryDanan/TIDE-analysis)
+- **TIDE-resonance**: [hillarydanan.github.io/TIDE-resonance](https://hillarydanan.github.io/TIDE-resonance)
+
+**Analysis Tools:**
+- **Pattern Analyzer**: [github.com/HillaryDanan/pattern-analyzer](https://github.com/HillaryDanan/pattern-analyzer)
+- **Concrete Overflow Detector**: [github.com/HillaryDanan/concrete-overflow-detector](https://github.com/HillaryDanan/concrete-overflow-detector)
+- **Game Theory Trust Suite**: [github.com/HillaryDanan/game-theory-trust-suite](https://github.com/HillaryDanan/game-theory-trust-suite)
+- **Information Atoms**: [github.com/HillaryDanan/information-atoms](https://github.com/HillaryDanan/information-atoms)
+
+**Live Results & Demos:**
+- **Latest Findings**: [hillarydanan.github.io/TIDE-resonance/tide-results.html](https://hillarydanan.github.io/TIDE-resonance/tide-results.html)
+- **Interactive Dashboard**: [hillarydanan.github.io/TIDE-resonance/tide-analysis-results/LIVE_RESULTS.html](https://hillarydanan.github.io/TIDE-resonance/tide-analysis-results/LIVE_RESULTS.html)
+- **3D Visualization**: [hillarydanan.github.io/TIDE-resonance/advanced_explorer.html](https://hillarydanan.github.io/TIDE-resonance/advanced_explorer.html)
+
+**Data:**
+- Neural data: Available upon request (anonymized fMRI data)
+- AI response dataset: Integrated within repositories
 
 ## Methods Summary
 
 Detailed methods are provided in Supplementary Information. Briefly:
-- **fMRI**: 3T Siemens scanner, standard preprocessing, RSA and univariate analyses
-- **AI Analysis**: 630+ responses across 3 architectures, trust dynamics quantification
-- **Statistical Analysis**: Mixed-effects models, permutation testing, multiple comparison correction
+- **fMRI**: 3T Siemens scanner, 60+ sessions including task-based and resting-state paradigms
+- **AI Analysis**: Dual approach analogous to fMRI methods:
+  - TIDE-analysis (quantitative): Task-based paradigm with 630+ categorized prompts
+  - TIDE-resonance (metacognitive): Resting-state analogue capturing AI self-reflection
+- **Statistical Analysis**: Mixed-effects models, permutation testing (p<0.0001), 95% CI bootstrapping
+- **Pattern Analysis**: 14+ integrated tools measuring linguistic signatures, concrete overflow, trust dynamics
 
 ## Author Contributions
 
